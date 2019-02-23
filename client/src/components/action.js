@@ -17,7 +17,7 @@ class Actions extends Component {
     return (
       <div style={btnDiv}>
         <div className="jumbotron" style={jumbotron}>
-          <h1>What should I do ?</h1>
+          <h1 onClick={this.props.picTask}>What should I do ?</h1>
         </div>
       </div>
     );

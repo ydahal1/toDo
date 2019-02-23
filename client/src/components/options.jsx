@@ -9,21 +9,14 @@ const optionsDiv = {
 
 const clearToDoStyles = {
   marginTop: "0px",
-  marginBottom: "14px"
+  marginBottom: "14px",
+  backgroundColor: "red",
+  border: "0.5px solid gray",
+  color: "white",
+  fontSize: "18px"
 };
 
 class Options extends Component {
-  //Constructor
-  constructor(props) {
-    super(props);
-    this.handleClear = this.handleClear.bind(this);
-  }
-  //Handle clear the list
-  handleClear(e) {
-    e.preventDefault();
-    // alert("Clear all to do lists");
-    alert(this.props.optionsData);
-  }
   state = {};
   render() {
     return (
@@ -31,13 +24,22 @@ class Options extends Component {
         <button
           style={clearToDoStyles}
           type="button"
-          className="btn btn-primary btn-danger btn-block btn-lg"
-          onClick={this.handleClear}
+          className="btn  btn-sm btn-block"
+          onClick={this.props.handlDeleteOptions}
+          hidden={!this.props.hasOptions}
         >
           Clear all TO DOs
         </button>
         {this.props.optionsData.map(option => {
-          return <Option key={option} taskOption={option} />;
+          return (
+            <div>
+              <Option
+                key={option}
+                taskOption={option}
+                optionData={this.props.optionsData}
+              />
+            </div>
+          );
         })}
         <Option />
       </div>

@@ -1,14 +1,4 @@
 import React, { Component } from "react";
-//Test funtions
-// const student = {
-//   name: "Yadhap Dahl",
-//   screamName() {
-//     alert(this.name);
-//   }
-// };
-
-// const test = student.screamName.bind(student);
-// test();
 
 //CSS styling
 const addToDoDIV = {
@@ -25,13 +15,34 @@ const addBtnStyle = {
   border: "1px solid gray"
 };
 
+const errDataSytle = {
+  color: "red",
+  fontSize: "10px"
+};
+
 class AddToDo extends Component {
-  //handle add to do
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     const userInput = e.target.option.value.trim();
-    if (userInput) {
-      console.log(userInput);
+    if (!userInput) {
+      const err = "Please enter a task";
+      this.props.handleErr(err);
+      return;
+    } else if (userInput.length < 2) {
+      const err = "Task too short";
+      this.props.handleErr(err);
+      return;
+    } else if (this.props.optionsData.indexOf(userInput) !== -1) {
+      const err = "This task already exists";
+      this.props.handleErr(err);
+      return;
+    } else {
+      this.props.handleNewTask(userInput);
     }
   }
 
@@ -39,6 +50,7 @@ class AddToDo extends Component {
   render() {
     return (
       <div style={addToDoDIV}>
+        <div style={errDataSytle}>{this.props.errorData}</div>
         <form onSubmit={this.handleSubmit}>
           <div className="input-group">
             <input
@@ -57,7 +69,7 @@ class AddToDo extends Component {
                   id="basic-addon2"
                   type="submit"
                 >
-                  &nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;Add a Task&nbsp;&nbsp;&nbsp;&nbsp;
                 </button>
               </span>
             </div>
